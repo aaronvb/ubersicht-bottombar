@@ -14,5 +14,3 @@ Included in the bottom bar:
 
 ## Screenshot
 In this screenshot I am also using [KWM](https://github.com/koekeishiya/kwm) for the window tiling manager.
-
-![ubersicht](http://aaronvb.com/images/ubersicht.png)
