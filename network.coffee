@@ -36,7 +36,7 @@ style: """
   -webkit-font-smoothing: antialiased
   font: 11px Source Code Pro
   bottom: 4px
-  left: 215px
+  left: 205px
   color: #D5C4A1
   span.up
     color: #da915c
