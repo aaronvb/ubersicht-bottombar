@@ -10,5 +10,5 @@ style: """
   width: 100%
   background-color: #171717
   z-index: -1
-  opacity: 0.6
+  opacity: 0.75
 """
