@@ -12,5 +12,5 @@ style: """
   left: 140px
   color: #D5C4A1
   span
-    color: #a7a65d
+    color: #c3c26d
 """

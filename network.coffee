@@ -39,7 +39,7 @@ style: """
   left: 215px
   color: #D5C4A1
   span.up
-    color: #a26c3b
+    color: #da915c
   span.down
     color: #139f75
 """
