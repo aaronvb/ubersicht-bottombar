@@ -1,8 +1,8 @@
 options =
-  city          : "Honolulu"       # default city in case location detection fails
-  region        : "HI"              # default region in case location detection fails
-  units         : 'f'               # c for celcius. f for Fahrenheit
-  staticLocation: false             # set to true to disable autmatic location lookup
+  city          : "Kailua"
+  region        : "HI"
+  units         : 'f'
+  staticLocation: false
 
 command: "#{process.argv[0]} bottombar/get-weather \
                           \"#{options.city}\" \
@@ -44,7 +44,7 @@ renderError: (data, message) ->
   console.error 'weather widget:', data.error if data?.error
 
   message ?= """
-     Could not retreive weather data for #{data.location}.
+     Could not retrieve weather data for #{data.location}.
   """
 
-  "<div class=\"error\">#{message}<div>"
+  "#{message}"
