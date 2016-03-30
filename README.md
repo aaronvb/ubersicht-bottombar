@@ -1,7 +1,7 @@
 # ubersicht-bottombar
 A bottom bar for [Übersicht](http://tracesof.net/uebersicht/)
 
-I took inspiration from i3 and other Ubersicht widgets to come up with this very simple bottom bar widget.
+I took inspiration from i3 and other Ubersicht widgets(https://github.com/herrbischoff/nerdbar.widget) to come up with this very simple bottom bar widget.
 
 Included in the bottom bar:
 - cpu
