@@ -1,45 +1,49 @@
-command: """
-    sar -n DEV 1 1 2> /dev/null |
-    grep '[0-9].*en[0-9]' |
-    {
-    while read -r line;
-    do
-        downBytes=$(($downBytes + $(echo $line | awk '{down=$4} END {print down}')));
-        upBytes=$(($upBytes + $(echo $line | awk '{up=$6} END {print up}')));
-        result=$(echo "$downBytes $upBytes");
-    done
-    echo $result;
-    }
-"""
+command: "sar -n DEV 1 1 2> /dev/null | awk '/en0/{x++}x==2 {print $4,$6;exit}'"
+
 refreshFrequency: 3000
 
 render: (output) ->
-  usage = (bytes) ->
-      kb = bytes / 1024
-      usageFormat kb
+  "net <span class='arrow'>↑ </span><span class='up'>0.00 KB/s</span> <span class='arrow'>↓ </span><span class='down'>0.00 KB/s</span>"
 
-  usageFormat = (kb) ->
-      if kb > 1024
-          mb = kb / 1024
-          "#{parseFloat(mb.toFixed(1))} MB/s"
-      else
-          "#{parseFloat(kb.toFixed(2))} KB/s"
+update: (output, domEl) ->
+  result = output.split(' ')
 
-  lines = output.split " "
+  # Rather than just use KB and/or MB, let's accommodate all speeds
+  # Pass "si" as true for base 10 (1 KiB = 1000 bytes)
+  # Pass "si" as false for base 2 (1 kB = 1024 bytes)
+  renderBytes = (bytes, type, si) ->
+    bytes = Number(bytes)
+    units = ['B']
+    u = 0
+    thresh = if si then 1000 else 1024
+    if (bytes < thresh)
+      units = ['B']
+      u = 0
+    else
+      units = if si then ['kB','MB','GB','TB','PB','EB','ZB','YB'] else ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB']
+      u = -1
+      loop
+        bytes /= thresh
+        ++u
+        break if (bytes <= thresh)
 
-  downBytes = (Number) lines[0]
-  upBytes = (Number) lines[1]
+      "#{bytes.toFixed(1)} #{units[u]}/s"
 
-  "net <span class='up'>#{usage(upBytes)}</span> - <span class='down'>#{usage(downBytes)}</span>"
+  $('.down').html renderBytes(result[0], 'IN', true)
+  $('.up').html renderBytes(result[1], 'OUT', true)
 
 style: """
   -webkit-font-smoothing: antialiased
   font: 11px Source Code Pro
   bottom: 4px
-  left: 205px
+  left: 210px
   color: #D5C4A1
   span.up
     color: #da915c
   span.down
     color: #139f75
+  span.arrow
+    font-size: 10px
+    font-weight: bold
+    opacity: 0.4
 """
